@@ -14,7 +14,7 @@ app = Flask(__name__)
 @app.route('/api/registros', methods=['GET'])
 def get_registros():
     cursor = conn.cursor()
-    cursor.execute('SELECT * FROM users')
+    cursor.execute('SELECT * FROM inventario.registros')
     registros = cursor.fetchall()
     cursor.close()
     return jsonify(registros)
