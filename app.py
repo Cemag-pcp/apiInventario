@@ -11,7 +11,7 @@ conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER,
 
 app = Flask(__name__)
 
-@app.route('/api/registros', methods=['GET'])
+@app.route('/api/publica/inventario/registros', methods=['GET'])
 def get_registros():
     cursor = conn.cursor()
     cursor.execute('SELECT * FROM inventario.registros')
