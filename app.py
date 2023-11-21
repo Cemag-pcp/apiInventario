@@ -14,9 +14,10 @@ app = Flask(__name__)
 @app.route('/api/publica/inventario/registros', methods=['GET'])
 def get_registros():
     cursor = conn.cursor()
-    cursor.execute('SELECT * FROM inventario.registros')
+    cursor.execute('SELECT familia,codigo,descricao,sum(contagem) as contagem_agrupada FROM inventario.registros GROUP BY familia,codigo,descricao')
     registros = cursor.fetchall()
     cursor.close()
+    
     return jsonify(registros)
 
 if __name__ == '__main__':
