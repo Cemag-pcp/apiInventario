@@ -22,7 +22,7 @@ def get_registros():
     cursor.execute("""
                     SELECT T1.familia,T1.codigo,T1.descricao,origem,curva_abc,sum(contagem) as contagem_agrupada,sum(recontagem)
                     FROM inventario.registros AS T1
-                    JOIN inventario.base_inventario_2023 AS T2 ON T1.codigo = T2.codigo
+                    JOIN inventario.base_inventario_2023 AS T2 ON T1.codigo = T2.codigo and T1.familia = T2.familia
                     GROUP BY T1.familia,T1.codigo,T1.descricao,origem,curva_abc
                    """)
     
