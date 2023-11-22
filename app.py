@@ -13,8 +13,19 @@ app = Flask(__name__)
 
 @app.route('/api/publica/inventario/registros', methods=['GET'])
 def get_registros():
+    
+    """
+    API para visualizar os resultados agrupados por codigo, descricao, familia e origem.
+    """
+    
     cursor = conn.cursor()
-    cursor.execute('SELECT familia,codigo,descricao,sum(contagem) as contagem_agrupada FROM inventario.registros GROUP BY familia,codigo,descricao')
+    cursor.execute("""
+                    SELECT T1.familia,T1.codigo,T1.descricao,origem,curva_abc,sum(contagem) as contagem_agrupada,sum(recontagem)
+                    FROM inventario.registros AS T1
+                    JOIN inventario.base_inventario_2023 AS T2 ON T1.codigo = T2.codigo
+                    GROUP BY T1.familia,T1.codigo,T1.descricao,origem,curva_abc
+                   """)
+    
     registros = cursor.fetchall()
     cursor.close()
     
